@@ -42,4 +42,3 @@ Consul template is not getting new data from vault before lease time. Let's say 
 * https://www.vaultproject.io/docs/index.html
 * https://github.com/hashicorp/vault
 * https://github.com/hashicorp/consul-template
-* 
