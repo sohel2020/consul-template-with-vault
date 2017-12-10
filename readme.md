@@ -38,7 +38,7 @@ $ vault token-revoke 9666ff3e-56e5-53f0-a295-33aafb911a80
 ### Missing piece:
 Consul template is not getting new data from vault before lease time. Let's say you have write new data after run `consul-template` new changes will take effect either restart `consul-template` or `lease time expire` 
 
-### Document:
+### Useful Document:
 * https://www.vaultproject.io/docs/index.html
 * https://github.com/hashicorp/vault
 * https://github.com/hashicorp/consul-template
