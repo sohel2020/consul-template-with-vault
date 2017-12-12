@@ -1,8 +1,8 @@
 
 vault {
   address = "http://localhost:8200"
-  grace = "2m"
-  token = "56ef8d68-cd8f-e5e0-bfa5-b8b29a6bf722"
+  grace = "1m"
+  token = "c34db5da-5d4e-2525-115e-cad1b99382a7"
   renew_token = true
 }
 template {
