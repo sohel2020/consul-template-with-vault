@@ -1,46 +1,52 @@
-import flask
+import os , sys
+from flask import Flask
+from flask import render_template
+import psycopg2
 
->>> content = None
->>> with open('env') as f:
-...     content = f.read()
-...
->>> content
-'username=Aniruddha\npassword=1234\n'
->>>
->>> content.split()
-['username=Aniruddha', 'password=1234']
->>> content.split('\n)
-  File "<stdin>", line 1
-    content.split('\n)
-                     ^
-SyntaxError: EOL while scanning string literal
->>> content.split('\n')
-['username=Aniruddha', 'password=1234', '']
->>> filter(lambda x: '=' in x, content.split('\n'))
-<filter object at 0x10d932e80>
->>> list(filter(lambda x: '=' in x, content.split('\n')))
-['username=Aniruddha', 'password=1234']
->>> l = list(filter(lambda x: '=' in x, content.split('\n')))
->>> l
-['username=Aniruddha', 'password=1234']
->>> l[-1]
-'password=1234'
->>> {x: y for item.split('=')[0], item.split('=')[0] in l }
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-  File "<stdin>", line 1, in <dictcomp>
-ValueError: too many values to unpack (expected 2)
->>> {x: y for item.split('=')[0], item.split('=')[0] in l }
-KeyboardInterrupt
->>>
-KeyboardInterrupt
->>> l
-['username=Aniruddha', 'password=1234']
->>> dict([('username', '1234'), ('password', '12345')])
-{'username': '1234', 'password': '12345'}
->>> l = list(map(lambda x: x.split('='), l))
->>> l
-[['username', 'Aniruddha'], ['password', '1234']]
->>> dict(l)
-{'username': 'Aniruddha', 'password': '1234'}
->>>
+d = {}
+
+PORT=8080
+
+with open('env') as file:
+    for line in file:
+        if line.strip():
+            conf = line.split('=', 1)
+            d[conf[0].strip()] = conf[1].strip()
+
+def create_connection():
+    try:
+        connect_str = "host={} dbname={} user={} password={}".format(d["DB_HOST"], d["DB_DATABASE"], d["DB_USERNAME"], d["DB_PASSWORD"])
+        return psycopg2.connect(connect_str)
+    except:
+        raise
+        sys.exit("DB connection Error")
+
+app = Flask(__name__)
+app.debug = True
+
+@app.route('/')
+def index():
+    connection = create_connection()
+    if connection:
+        # user = {'username': 'Miguel'}
+        return '''
+            <html>
+                <head>
+                    <title>VAULT Home Page</title>
+                </head>
+                <body>
+                    <h2><center>VAULT Demo Appliation</center></h2>
+                    <hr>
+                    <p><b>Database EndPoint:</b> ''' + d['DB_HOST'] + '''</p>
+                    <p><b>Database Port:</b> ''' + d['DB_PORT'] + '''</p>
+                    <p><b>Database Name:</b> ''' + d['DB_DATABASE'] + '''</p>
+                    <p><b>Database Username:</b> ''' + d['DB_USERNAME'] + '''</p>
+                    <p><b>Database Password:</b> ''' + d['DB_PASSWORD'] + '''</p>
+                </body>
+            </html>'''
+    connection.close()
+
+app.run(host="0.0.0.0", port=PORT)    
+
+
+# host = d["DB_HOST"], database= ["DB_DATABASE"],user = ["DB_USERNAME"], pass = d["DB_PASSWORD"]

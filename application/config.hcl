@@ -2,9 +2,14 @@
 vault {
   address = "http://localhost:8200"
   grace = "1m"
-  token = "c34db5da-5d4e-2525-115e-cad1b99382a7"
+  token = "4a670457-daa6-c7fc-bb6e-c690ede49a30"
   renew_token = true
 }
+
+exec {
+  command = "python3 app.py"
+}
+
 template {
   source = "env.ctmpl"
   destination = "env"
