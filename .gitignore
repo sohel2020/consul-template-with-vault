@@ -1,3 +1,4 @@
 application/venv
 application/env
-vault_audit.log
+application/.vscode
+*.log

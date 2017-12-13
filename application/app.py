@@ -47,6 +47,3 @@ def index():
     connection.close()
 
 app.run(host="0.0.0.0", port=PORT)    
-
-
-# host = d["DB_HOST"], database= ["DB_DATABASE"],user = ["DB_USERNAME"], pass = d["DB_PASSWORD"]
