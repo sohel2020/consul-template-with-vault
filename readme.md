@@ -60,7 +60,7 @@ $ vault write database/roles/admin \
     max_ttl="600"
 
 # skip for the sake for some test
-$ vault read database/roles/admin
+$ vault read database/creds/admin
 
 
 ### write policy and create token
